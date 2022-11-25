@@ -6,7 +6,7 @@ function TodoList() {
     id: '03949efgq',
     value: 'Make Dinner'
   }])
-  const addTodo =  todo => {
+  const addTodo = todo => {
     if(!todo.value || /^\s*$/.test(todo.value)) return
     const newTodos = [todo,...todos]
     setTodos(newTodos)
@@ -25,6 +25,7 @@ function TodoList() {
     setTodos(newTodos)
   }
   const editTodo = (todoId, newValue)=>{
+    console.log('edit');
     if (!newValue.value || /^\s*$/.test(newValue.value)) return 
     let newTodos = todos.map(todo=>{
       if (todo.id === todoId) {

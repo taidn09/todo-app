@@ -24,9 +24,15 @@ function Todo({todos, completeTodo, deleteTodo, editTodo}) {
           {todo.value}
         </div>
         <div className={styles['icons']}>
-          <SlCheck onClick={() => completeTodo(todo.id)} />
-          <SlPencil onClick={()=>setEdit({id:todo.id, value:todo.value})} />
-          <SlClose onClick={()=>deleteTodo(todo.id)} />
+          <span data-tooltip='complete'>
+            <SlCheck onClick={() => completeTodo(todo.id)} />
+          </span>
+          <span data-tooltip='edit'>
+            <SlPencil onClick={()=>setEdit({id:todo.id, value:todo.value})} />
+          </span>
+          <span data-tooltip='delete'>
+            <SlClose onClick={()=>deleteTodo(todo.id)} />
+          </span>    
         </div>
       </div>
     ))

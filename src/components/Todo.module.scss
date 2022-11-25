@@ -10,25 +10,64 @@
     align-items: center;
     font-size: 1.4rem;
     user-select: none;
-    &.complete {
-        opacity: 0.2;
-        .icons{
-            & svg{
-                pointer-events: none;
-            }
-            & svg:last-child{
-                pointer-events: all;
-            }
-        }
-    }
-    .content{
+
+    .content {
         max-width: 70%;
         white-space: normal;
     }
-    .icons{
-        & svg{
+
+    .icons {
+        & span {
+            position: relative;
+
+            &:hover {
+                &::before {
+                    opacity: 1;
+                    visibility: visible;
+                    top: -30px;
+                }
+            }
+
+            &::before {
+                content: attr(data-tooltip);
+                position: absolute;
+                padding: 2px 6px;
+                pointer-events: none;
+                top: 0;
+                left: 0;
+                background-color: #5B86E5;
+                color: #fff;
+                box-shadow: 0 0 2px rgba($color: #000000, $alpha: 0.2);
+                border-radius: 2px;
+                font-size: 12px;
+                opacity: 0;
+                visibility: hidden;
+                transition: 0.25s;
+            }
+
+        }
+
+        & svg {
             margin: 0 10px;
             cursor: pointer;
+        }
+    }
+
+    &.complete {
+        box-shadow: none;
+        pointer-events: none;
+        & .content {
+            opacity: 0.5;
+        }
+        & .icons {
+            & svg {
+                pointer-events: none;
+                opacity: 0.5;
+            }
+            & span:last-child svg{
+                opacity: 1;
+                pointer-events: all;
+            }
         }
     }
 }
