@@ -1,18 +1,19 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import Todo from './Todo'
 import TodoForm from './TodoForm'
 function TodoList() {
-  const [todos,setTodos] = useState([{
-    id: '03949efgq',
-    value: 'Make Dinner'
-  }])
+  let todosStorage = JSON.parse(localStorage.getItem('todos'))
+  const [todos, setTodos] = useState(todosStorage !==null ? todosStorage : [])
+  useEffect(() => {
+    localStorage.setItem('todos', JSON.stringify(todos))
+  },[todos])
   const addTodo = todo => {
-    if(!todo.value || /^\s*$/.test(todo.value)) return
-    const newTodos = [todo,...todos]
+    if (!todo.value || /^\s*$/.test(todo.value)) return
+    const newTodos = [todo, ...todos]
     setTodos(newTodos)
   }
-  const completeTodo = (id)=>{
-    let updateTodos = todos.map(todo=>{
+  const completeTodo = (id) => {
+    let updateTodos = todos.map(todo => {
       if (todo.id === id) {
         todo.isComplete = !todo.isComplete
       }
@@ -20,14 +21,13 @@ function TodoList() {
     })
     setTodos(updateTodos)
   }
-  const deleteTodo = (id)=>{
-    const newTodos = [...todos].filter(todo=>todo.id !== id)
+  const deleteTodo = (id) => {
+    const newTodos = [...todos].filter(todo => todo.id !== id)
     setTodos(newTodos)
   }
-  const editTodo = (todoId, newValue)=>{
-    console.log('edit');
-    if (!newValue.value || /^\s*$/.test(newValue.value)) return 
-    let newTodos = todos.map(todo=>{
+  const editTodo = (todoId, newValue) => {
+    if (!newValue.value || /^\s*$/.test(newValue.value)) return
+    let newTodos = todos.map(todo => {
       if (todo.id === todoId) {
         todo = {
           ...newValue
@@ -39,13 +39,13 @@ function TodoList() {
   }
   return (
     <Fragment>
-      <h1 style={{ textAlign: 'center', fontSize: '2.5rem', fontWeight: 500 , marginBottom : 30}}>What's the Plan for Today?</h1>
+      <h1 style={{ textAlign: 'center', fontSize: '2.5rem', fontWeight: 500, marginBottom: 30 }}>What's the Plan for Today?</h1>
       <TodoForm onSubmit={addTodo} />
-      <Todo 
-        todos={todos} 
-        completeTodo={completeTodo} 
-        deleteTodo={deleteTodo} 
-        editTodo={editTodo}/>
+      <Todo
+        todos={todos}
+        completeTodo={completeTodo}
+        deleteTodo={deleteTodo}
+        editTodo={editTodo} />
     </Fragment>
   )
 }
